@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Books</title>
+<link rel="shortcut icon" type="image/jpg" href="../book_1426.png"/>
+
+    <!-- Add any necessary CSS files or stylesheets -->
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(255, 255, 255);
+            
+        }
+        h1{
+            text-align: center;
+        }
+        /* CSS styles for card layout */
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            display: inline-block;
+            background-color: rgb(45, 209, 238);
+            position: relative; /* Added */
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
+        }
+
+        .card-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-details {
+            font-size: 20px;
+        }
+        .edit-btn{
+            border-radius: 5px;
+            height: 40px;
+            width: 100px;
+            background-color: rgb(21, 255, 0);
+            color: black;
+            position: relative;
+            left: 0px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .edit-btn:hover{
+            background-color: blue;
+            color: white;
+        }
+        .dlt-btn{
+            border-radius: 5px;
+            height: 40px;
+            width: 100px;
+            background-color: rgb(21, 255, 0);
+            color: black;
+            position: relative;
+            left: 100px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .dlt-btn:hover{
+            background-color: red;
+            color: white;
+        }
+        .edit-container{
+           position: absolute;
+        }
+        /* CSS for the bookForm */
+#bookEditForm {
+    display: none;
+    position: absolute;
+    top: -180px;
+    left: 456px;
+    width: 370px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #bookEditForm label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  #bookEditForm input[type="text"],
+  #bookEditForm input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  #bookEditForm input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #bookEditForm input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <h1>All Books</h1>
+    </div>
+ 
+    <div class="card-container">
+        <% books.forEach((book, index) => { %>
+            <div class="card">
+                <div class="card-title"><%= book.Title %></div>
+                <div class="card-details">
+                    
+                    <p><strong>Id:</strong><%= book.Id%></p>
+                    <p><strong>Author:</strong> <%= book.Author %></p>
+                    <p><strong>Genre:</strong> <%= book.Genre %></p>
+                    <p><strong>Publish Year:</strong> <%= book.Published_year %></p>
+         
+                </div>
+                <!-- delete button -->
+                <button class="edit-btn" onclick="editBook('<%= book.Id%>')">Edit</button>
+                <button class="dlt-btn" onclick="deleteBook('<%= book.Id %>')">Delete</button>
+            </div>
+        <% }); %>
+    </div>
+    <div class="edit-container">
+        <form  id="bookEditForm">
+            <h4>Please provide same Id </h4>
+            <label for="Id">Id</label>
+            <input type="number" name="id" id="editid" value="" />
+            <label for="title">Title</label>
+            <input type="text" name="title" id="edittitle" value="" />
+            <label for="author">Author</label>
+            <input type="text" name="author" id="editauthor" value="" />
+            <label for="genre">Genre</label>
+            <input type="text" name="genre" id="editgenre" value="" />
+            <label for="published_year">Published Year</label>
+            <input type="number" name="published_year" id="editpublished_year" value="" />
+            <input type="submit" value="Save">
+        </form>
+    </div>
+
+    <script>
+    function editBook(bookId) {
+    var form = document.getElementById("bookEditForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+
+          // Add event listener for form submission
+    document.getElementById("bookEditForm").addEventListener("submit", function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get form values
+        const id = document.getElementById("editid").value;
+        const title = document.getElementById("edittitle").value;
+        const author = document.getElementById("editauthor").value;
+        const genre = document.getElementById("editgenre").value;
+        const published_year = document.getElementById("editpublished_year").value;
+
+        // Create a new XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+
+        // Configure the request
+        xhr.open('PUT', `/books/${id}`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // Set up event listener for when the request completes
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Reload the page or handle the response appropriately
+                console.log('Book updated successfully');
+                // Hide the form after successful submission
+                document.getElementById("bookEditForm").style.display = "none";
+                window.location.reload();
+            } else {
+                console.error('Failed to update book');
+            }
+        };
+
+        // Set up event listener for handling errors
+        xhr.onerror = function () {
+            console.error('Error updating book');
+        };
+
+        // Send the request with form data in the request body
+        xhr.send(JSON.stringify({
+            "id": id,  
+            "Title": title,
+            "Author": author,
+            "Genre": genre,
+            "Published_year": published_year
+        }));
+    });
+    }
+    function deleteBook(bookId) {
+    // Parse bookId as integer
+    const id = parseInt(bookId);
+
+    // Check if id is a valid number
+    if (!isNaN(id)) {
+        if (confirm("Are you sure you want to delete this book?")) {
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Configure the request
+            xhr.open('DELETE', `/books/${id}`);
+
+            // Set up event listener for when the request completes
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Reload the page
+                    window.location.reload();
+                } else {
+                    console.error('Failed to delete book');
+                }
+            };
+
+            // Set up event listener for handling errors
+            xhr.onerror = function() {
+                console.error('Error deleting book');
+            };
+
+            // Send the request
+            xhr.send();
+        }
+    } else {
+        console.error('Invalid book ID:', bookId);
+    }
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+h1{
+    text-align: center;
+}
+.nav-bar {
+    height: 70px;
+    width: 100%;
+    background-color: rgb(35, 233, 28);
+    border: 1px solid black;
+}
+.add-btn{
+    height: 75px;
+    width: 200px;
+    position:absolute;
+    left: 350px;
+    top: 100px;
+    font-size: 25px;
+    font-family:'Times New Roman', Times, serif
+}
+.add-btn:hover{
+    background-color: rgb(74, 178, 247);
+    border-radius: 10px;
+}
+/* CSS for the bookForm */
+#bookForm {
+    display: none;
+    position: absolute;
+    top: 190px;
+    left: 220px;
+    width: 30%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #bookForm label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  #bookForm input[type="text"],
+  #bookForm input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  #bookForm input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #bookForm input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+.display-btn{
+    height: 75px;
+    width: 200px;
+    position:absolute;
+    left: 800px;
+    top: 100px;
+    font-size: 25px;
+    font-family:'Times New Roman', Times, serif
+}
+.display-btn:hover{
+    background-color: rgb(80, 223, 44);
+    border-radius: 10px;
+}
+
+.edit-btn:hover{
+    background-color: rgb(253, 156, 46);
+    border-radius: 10px;
+}

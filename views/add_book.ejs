@@ -1,0 +1,63 @@
+<!-- index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your App</title>
+    <link rel="icon" type="image/x-icon" href="../book_1426.png">
+    <!-- Add any necessary CSS files or stylesheets -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    
+    <!-- nav-bar -->
+    <div class="nav-bar">
+        <!-- Add navigation links/buttons here -->
+       <h1>My Book App</h1>
+    </div>
+    
+    <button class="add-btn" onclick="toggleForm()">Add Book</button>
+    <button class="display-btn" onclick="displayBooks()">Display Books</button>
+   
+    <form id="bookForm" action="/add-book" method="POST">
+        <!-- Form fields go here -->
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id">
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author">
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre">
+
+        <label for="publishYear">Publish Year:</label>
+        <input type="number" id="publishYear" name="publishYear">
+
+        <input type="submit" value="Submit" onclick="showAlert()">
+    </form>
+  
+    <script>
+        function showAlert() {
+            alert("Book successfully added!");
+        }
+
+        function toggleForm() {
+            var form = document.getElementById("bookForm");
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            }else{
+                form.style.display = "none";
+            }
+        }
+
+        function displayBooks() {
+            window.location.href = "/display-books"; // Redirect to the display-books route
+        }
+    </script>
+</body>
+</html>
